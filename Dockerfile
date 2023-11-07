@@ -13,7 +13,7 @@ RUN mkdir -p $ROS_WS/src
 WORKDIR $ROS_WS/src
 RUN git clone https://github.com/AssistiveRoboticsUNH/smart-home.git
 WORKDIR smart-home
-RUN git checkout deployment
+RUN git checkout jackal_test
 RUN vcs import < external.repos.yaml
 WORKDIR $ROS_WS
 
@@ -35,6 +35,7 @@ RUN pip3 install opencv-contrib-python
 RUN pip3 install pysmartthings
 RUN pip3 install pyzmq
 
+RUN pip3 install transforms3d
 
 # pip dependencies for deepfake
 RUN pip3 install elevenlabslib
@@ -61,6 +62,8 @@ RUN adduser root dialout
 RUN sudo sed -i 's/geteuid/getppid/' /usr/bin/vlc
 COPY ros_entrypoint.sh /
 RUN rm -rf /var/lib/apt/lists/*
+RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+RUN echo "source /home/smart_home_ws/install/setup.bash" >> ~/.bashrc
 
 #COPY smart_home_launch.bash /tmp/smart_home_launch.bash
 ENTRYPOINT ["/ros_entrypoint.sh"]

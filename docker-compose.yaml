@@ -23,12 +23,5 @@ services:
         #tty: true
         command: /tmp/smart_home_launch.bash 
         # access to 1 GPU device
-        deploy:
-          resources:
-            reservations:
-              devices:
-                - driver: nvidia
-                  count: 1
-                  capabilities: [gpu]
-
+   
 
